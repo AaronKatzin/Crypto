@@ -33,7 +33,7 @@ def getHashtags(filename):
                     hashtagDict[strippedHashtag] = hashtagDict.get(strippedHashtag, 0) + 1
     csv_file.close()
 
-    outputFile = open(current_dir + "\\" + filename + "_hashtags", 'w', encoding="utf8")
+    outputFile = open(current_dir + "\\" + filename + "_hashtags", 'w', encoding="utf8", newline='')
     writer = csv.writer(outputFile)
     writer.writerow(["hashtag", "count"])
     #sortedHashtagDict  = sorted(hashtagDict, key=hashtagDict.get)
@@ -209,7 +209,7 @@ def getStats(filename):
         diamondhands_count_arr.append(diamondhands_count)
 
     csv_file.close()
-    outputFile = open(current_dir + "\\" + filename + "_tweetStats", 'w', encoding="utf8")
+    outputFile = open(current_dir + "\\" + filename + "_tweetStats", 'w', encoding="utf8", newline='')
     print("Opening file fow writing: " + current_dir + "\\" + filename + "_tweetStats")
     writer = csv.writer(outputFile)
     writer.writerow(["date", "tweet_count", "replies", "avg_replies","retweets","average_retweets","likes",

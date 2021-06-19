@@ -6,7 +6,7 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 rawDataFileName = "BTC_USD_2020-06-19_2021-06-18-CoinDesk.csv"
 outputFileName = "weeklyCoinAvg.csv"
 
-outputFile = open(current_dir + "\\data\\" + outputFileName, 'w')
+outputFile = open(current_dir + "\\data\\" + outputFileName, 'w', newline='')
 
 with open("data\\" + rawDataFileName) as csv_file:
     print(os.path.dirname(os.path.realpath(__file__)) + "\\data\\" + rawDataFileName)
