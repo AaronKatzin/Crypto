@@ -36,9 +36,9 @@ def getHashtags(filename):
     outputFile = open(current_dir + "\\" + filename + "_hashtags", 'w', encoding="utf8")
     writer = csv.writer(outputFile)
     writer.writerow(["hashtag", "count"])
-    sortedHashtagDict  = sorted(hashtagDict, key=hashtagDict.get)
-    for key in sortedHashtagDict:
-        writer.writerow([key])
+    #sortedHashtagDict  = sorted(hashtagDict, key=hashtagDict.get)
+    for key,value in hashtagDict.items():
+        writer.writerow([key,value])
     outputFile.close()
 
 def getStats(filename):
@@ -184,6 +184,30 @@ def getStats(filename):
 
                     prev_date = date
                     i += 1
+
+        #deal with last (partial) day bug:https://github.com/AaronKatzin/Crypto/issues/2
+        date_arr.append(date)
+        count_arr.append(count)
+        replies_count_arr.append(replies_count)
+        avg_replies_arr.append(replies_count / count)
+        retweets_count_arr.append(retweets_count)
+        avg_retweets_arr.append(retweets_count / count)
+        likes_count_arr.append(likes_count)
+        avg_likes_arr.append(likes_count / count)
+
+        investing_count_arr.append(investing_count)
+        hodl_count_arr.append(hodl_count)
+        hold_count_arr.append(hold_count)
+        tesla_count_arr.append(tesla_count)
+        sell_count_arr.append(sell_count)
+        buy_count_arr.append(buy_count)
+        elon_musk_count_arr.append(elon_musk_count)
+        shorttesla_count_arr.append(shorttesla_count)
+        referral_count_arr.append(referral_count)
+        gold_count_arr.append(gold_count)
+        moon_count_arr.append(moon_count)
+        diamondhands_count_arr.append(diamondhands_count)
+
     csv_file.close()
     outputFile = open(current_dir + "\\" + filename + "_tweetStats", 'w', encoding="utf8")
     print("Opening file fow writing: " + current_dir + "\\" + filename + "_tweetStats")
