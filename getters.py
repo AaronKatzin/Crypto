@@ -1,5 +1,16 @@
 import twint,os,csv
+import pandas as pd
 from datetime import datetime
+
+def getTweetStatsDF():
+
+    directory = os.path.dirname(os.path.realpath(__file__)) + "\\data"
+    df = pd.DataFrame()
+    for entry in os.scandir(directory):
+        if entry.path.endswith(".csv_tweetStats") and entry.is_file():
+            df = df.append(pd.read_csv(entry.path))
+    return df
+
 
 def getFollowers(username):
     """"TODO: add error handling in case username doesn't exist"""
