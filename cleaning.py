@@ -1,6 +1,8 @@
 import pandas as pd
 
 def cleanDF(df):
+    # clean S&P weekend null values
+    df["SPAvg"] = df["SPAvg"].fillna(method='ffill', inplace=False)
 
     #clean nulls
     print("Dataframe shape before cleaning: " + str(df.shape))
