@@ -1,6 +1,39 @@
 import twint,os,csv
 import pandas as pd
 from datetime import datetime
+import numpy as np
+
+def getExtendedStatsDF(df, MAJOR_CHANGE):
+    df['diamondhands_count_avg'] = df['diamondhands_count'] / df['tweet_count']
+    df['investing_count_avg'] = df['investing_count'] / df['tweet_count']
+    df['hodl_count_avg'] = df['hodl_count'] / df['tweet_count']
+    df['hold_count_avg'] = df['hold_count'] / df['tweet_count']
+    df['tesla_count_avg'] = df['tesla_count'] / df['tweet_count']
+    df['sell_count_avg'] = df['sell_count'] / df['tweet_count']
+    df['buy_count_avg'] = df['buy_count'] / df['tweet_count']
+    df['elon_musk_count_avg'] = df['elon_musk_count'] / df['tweet_count']
+    df['shorttesla_count_avg'] = df['shorttesla_count'] / df['tweet_count']
+    df['referral_count_avg'] = df['referral_count'] / df['tweet_count']
+    df['gold_count_avg'] = df['gold_count'] / df['tweet_count']
+    df['moon_count_avg'] = df['moon_count'] / df['tweet_count']
+
+    df['increase_open'] = np.where(df['Open'].shift(1) < df['Open'], 1, 0)
+    df['percent_change'] = (df['Open'] - df['Open'].shift(1)) / df['Open'] * 100
+    df['increase'] = np.where(df['percent_change'] > 0, 1, 0)
+    df['decrease'] = np.where(df['percent_change'] < 0, 1, 0)
+    df['major_increase'] = np.where(df['percent_change'] > MAJOR_CHANGE, 1, 0)
+    df['major_decrease'] = np.where(df['percent_change'] < - MAJOR_CHANGE, 1, 0)
+    df['major_change'] = np.where(df['percent_change'] > MAJOR_CHANGE, 1, 0) + np.where(
+        df['percent_change'] < - MAJOR_CHANGE, 1, 0)
+
+    df['percent_change_tomorrow'] = df['percent_change'].shift(-1)
+    df['increase_tomorrow'] = df['increase'].shift(-1)
+    df['decrease_tomorrow'] = df['decrease'].shift(-1)
+    df['major_increase_tomorrow'] = df['major_increase'].shift(-1)
+    df['major_decrease_tomorrow'] = df['major_decrease'].shift(-1)
+    df['major_change_tomorrow'] = df['major_change'].shift(-1)
+
+    return df
 
 def getTweetStatsDF():
 
@@ -52,10 +85,17 @@ def getHashtags(filename):
         writer.writerow([key,value])
     outputFile.close()
 
+def getAllFilesStats():
+    directory = os.path.dirname(os.path.realpath(__file__)) + "\\data"
+    for entry in os.scandir(directory):
+        if entry.path.endswith("OR bitcoin.csv") and entry.is_file():
+            getStats(entry.path)
+
+
 def getStats(filename):
     current_dir = os.path.dirname(os.path.realpath(__file__))
-    with open(current_dir + "\\" + filename, encoding="utf8") as csv_file:
-        print("Opening file for getStats: " + current_dir + "\\" + filename)
+    with open(filename, encoding="utf8") as csv_file:
+        print("Opening file for getStats: " + filename)
         csv_reader = csv.reader(csv_file, delimiter=',')
         first = True
         second = False
@@ -220,8 +260,8 @@ def getStats(filename):
         diamondhands_count_arr.append(diamondhands_count)
 
     csv_file.close()
-    outputFile = open(current_dir + "\\" + filename + "_tweetStats", 'w', encoding="utf8", newline='')
-    print("Opening file fow writing: " + current_dir + "\\" + filename + "_tweetStats")
+    outputFile = open(filename + "_tweetStats", 'w', encoding="utf8", newline='')
+    print("Opening file fow writing: " + filename + "_tweetStats")
     writer = csv.writer(outputFile)
     writer.writerow(["date", "tweet_count", "replies", "avg_replies","retweets","average_retweets","likes",
                      "average_likes", "diamondhands_count","investing_count","hodl_count","hold_count","tesla_count",
