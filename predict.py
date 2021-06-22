@@ -28,5 +28,7 @@ def predict(df, used_features, catagory):
                     precision=2, filled=True)
 
 
-
+def predictList(df, used_features,category_list):
+    for category in category_list:
+        predict(df, used_features, category)
 
