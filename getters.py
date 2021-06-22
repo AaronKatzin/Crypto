@@ -16,6 +16,7 @@ def getExtendedStatsDF(df, MAJOR_CHANGE):
     df['referral_count_avg'] = df['referral_count'] / df['tweet_count']
     df['gold_count_avg'] = df['gold_count'] / df['tweet_count']
     df['moon_count_avg'] = df['moon_count'] / df['tweet_count']
+    df['BTCAvg'] = (df['Open'] + df['Close'] )/ 2
 
     df['increase_open'] = np.where(df['Open'].shift(1) < df['Open'], 1, 0)
     df['percent_change'] = (df['Open'] - df['Open'].shift(1)) / df['Open'] * 100
