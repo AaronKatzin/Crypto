@@ -22,7 +22,7 @@ coinPriceDF = pd.read_csv("data\\BTC-USD.csv")
 # load daily S&P 500 index file into a dataframe
 SPAvgDF = pd.read_csv("data\\20200619_20210619_S&P_Daily_avg.csv")
 
-# join daily stats files drataframe with the coin price and
+# join daily stats files dataframe with the coin price and S&P daily avg
 df = statsDF.set_index('date').join(coinPriceDF.set_index('date'))
 df = df.join(SPAvgDF.set_index('date'))
 
