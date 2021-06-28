@@ -8,16 +8,19 @@ from predict import predict, predictList
 MAJOR_CHANGE = 5
 
 # to get new tweet data, only needs to run once
-# getWeeksOfTweets(2020,4,16,52, "btc OR bitcoin")
+"""# getWeeksOfTweets(2020,4,16,52, "btc OR bitcoin")"""
 
 # parse raw data to create daily stats files, only needed when there's new data
-# getAllFilesStats()
+"""# getAllFilesStats()"""
 
 # load daily stats files into a dataframe
 statsDF = getTweetStatsDF()
 
 # load daily coin price file into a dataframe
 coinPriceDF = pd.read_csv("data\\BTC-USD.csv")
+
+#crawl S&P for daily average, only needed to be done once
+"""crawlSandP()"""
 
 # load daily S&P 500 index file into a dataframe
 SPAvgDF = pd.read_csv("data\\20200619_20210619_S&P_Daily_avg.csv")
